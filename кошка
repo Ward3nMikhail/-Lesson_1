@@ -1,0 +1,42 @@
+# class Cat extends Animal {
+    private static int catCount = 0;
+    private boolean isFull;
+    private final int MAX_RUN_DISTANCE = 200;
+
+    # Cat(String name) {
+        super(name);
+        isFull = false;
+        catCount++;
+    }
+
+    # @Override
+    # void run(int distance) {
+        if (distance <= MAX_RUN_DISTANCE) {
+            System.out.println(name + " пробежал " + distance + " м.");
+        } else {
+            System.out.println(name + " не может пробежать " + distance +
+                " м. (максимум " + MAX_RUN_DISTANCE + " м.)");
+        }
+    }
+
+    # @Override
+    # void swim(int distance) {
+        System.out.println(name + " не умеет плавать!");
+    }
+
+    # boolean eatFromBowl(Bowl bowl, int foodAmount) {
+        if (bowl.takeFood(foodAmount)) {
+            isFull = true;
+            return true;
+        }
+        return false;
+    }
+
+    # boolean isFull() {
+        return isFull;
+    }
+
+    # static int getCatCount() {
+        return catCount;
+    }
+}
