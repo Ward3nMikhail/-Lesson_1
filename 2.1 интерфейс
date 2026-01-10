@@ -1,1 +1,16 @@
+# interface Shape {
+    String getFillColor();
+    String getBorderColor();
 
+    double getPerimeter();
+    double getArea();
+
+    default void printInfo() {
+        System.out.printf("Фигура: %s%n", this.getClass().getSimpleName());
+        System.out.printf("Периметр: %.2f%n", getPerimeter());
+        System.out.printf("Площадь: %.2f%n", getArea());
+        System.out.printf("Цвет заливки: %s%n", getFillColor());
+        System.out.printf("Цвет границы: %s%n", getBorderColor());
+        System.out.println("------------------------");
+    }
+}
