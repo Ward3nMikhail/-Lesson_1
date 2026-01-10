@@ -1,0 +1,34 @@
+# class Dog extends Animal {
+    private static int dogCount = 0;
+    private final int MAX_RUN_DISTANCE = 500;
+    private final int MAX_SWIM_DISTANCE = 10;
+
+    # Dog(String name) {
+        super(name);
+        dogCount++;
+    }
+
+    # @Override
+    # void run(int distance) {
+        if (distance <= MAX_RUN_DISTANCE) {
+            System.out.println(name + " пробежал " + distance + " м.");
+        } else {
+            System.out.println(name + " не может пробежать " + distance +
+                " м. (максимум " + MAX_RUN_DISTANCE + " м.)");
+        }
+    }
+
+    # @Override
+    # void swim(int distance) {
+        if (distance <= MAX_SWIM_DISTANCE) {
+            System.out.println(name + " проплыл " + distance + " м.");
+        } else {
+            System.out.println(name + " не может проплыть " + distance +
+                " м. (максимум " + MAX_SWIM_DISTANCE + " м.)");
+        }
+    }
+
+    # static int getDogCount() {
+        return dogCount;
+    }
+}
