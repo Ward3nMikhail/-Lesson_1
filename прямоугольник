@@ -1,0 +1,33 @@
+# class Rectangle implements Shape {
+    private double width;
+    private double height;
+    private String fillColor;
+    private String borderColor;
+
+    # Rectangle(double width, double height, String fillColor, String borderColor) {
+        this.width = width;
+        this.height = height;
+        this.fillColor = fillColor;
+        this.borderColor = borderColor;
+    }
+
+    # @Override
+    # double getPerimeter() {
+        return 2 * (width + height);
+    }
+
+    # @Override
+    # double getArea() {
+        return width * height;
+    }
+
+    # @Override
+    # String getFillColor() {
+        return fillColor;
+    }
+
+    # @Override
+    # String getBorderColor() {
+        return borderColor;
+    }
+}
