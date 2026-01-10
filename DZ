@@ -1,0 +1,201 @@
+public class Main {
+    public static void main(String[] args) {
+        // 1
+        printThreeWords();
+        
+        // 2
+        checkSumSign();
+        
+        // 3
+        printColor();
+        
+        // 4
+        compareNumbers();
+        
+        // 5
+        System.out.println("Сумма в пределах 10–20: " + isSumInRange(5, 8));
+        
+        // 6
+        printPositiveOrNegative(5);
+        printPositiveOrNegative(-3);
+        
+        // 7
+        System.out.println("Число отрицательное: " + isNegative(-5));
+        System.out.println("Число отрицательное: " + isNegative(3));
+        
+        // 8
+        printStringNTimes("Hello", 3);
+        
+        // 9
+        System.out.println("2024 год високосный: " + isLeapYear(2024));
+        System.out.println("1900 год високосный: " + isLeapYear(1900));
+        System.out.println("2000 год високосный: " + isLeapYear(2000));
+        
+        // 10
+        int[] array1 = {1, 1, 0, 0, 1, 0, 1, 1, 0, 0};
+        System.out.print("Исходный массив: ");
+        printArray(array1);
+        invertArray(array1);
+        System.out.print("Инвертированный массив: ");
+        printArray(array1);
+        
+        // 11
+        int[] array2 = new int[100];
+        fillArrayWithNumbers(array2);
+        System.out.print("Массив 1–100: ");
+        printArray(array2);
+        
+        // 12
+        int[] array3 = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
+        System.out.print("До умножения: ");
+        printArray(array3);
+        multiplyLessThanSix(array3);
+        System.out.print("После умножения: ");
+        printArray(array3);
+        
+        // 13
+        int[][] matrix = new int[5][5];
+        fillDiagonalWithOnes(matrix);
+        System.out.println("Матрица с диагональю из единиц:");
+        printMatrix(matrix);
+        
+        // 14
+        int[] filledArray = createArray(5, 7);
+        System.out.print("Заполненный массив: ");
+        printArray(filledArray);
+    }
+
+    // 1
+    public static void printThreeWords() {
+        System.out.println("Orange");
+        System.out.println("Banana");
+        System.out.println("Apple");
+    }
+
+    // 2
+    public static void checkSumSign() {
+        int a = 5;
+        int b = -10;
+        int sum = a + b;
+        if (sum >= 0) {
+            System.out.println("Сумма положительная");
+        } else {
+            System.out.println("Сумма отрицательная");
+        }
+    }
+
+    // 3
+    public static void printColor() {
+        int value = 50;
+        if (value <= 0) {
+            System.out.println("Красный");
+        } else if (value <= 100) {
+            System.out.println("Жёлтый");
+        } else {
+            System.out.println("Зелёный");
+        }
+    }
+
+    // 4
+    public static void compareNumbers() {
+        int a = 7;
+        int b = 3;
+        if (a >= b) {
+            System.out.println("a >= b");
+        } else {
+            System.out.println("a < b");
+        }
+    }
+
+    // 5
+    public static boolean isSumInRange(int a, int b) {
+        int sum = a + b;
+        return sum >= 10 && sum <= 20;
+    }
+
+    // 6
+    public static void printPositiveOrNegative(int number) {
+        if (number >= 0) {
+            System.out.println("Число положительное");
+        } else {
+            System.out.println("Число отрицательное");
+        }
+    }
+
+    // 7
+    public static boolean isNegative(int number) {
+        return number < 0;
+    }
+
+    // 8
+    public static void printStringNTimes(String str, int n) {
+        for (int i = 0; i < n; i++) {
+            System.out.println(str);
+        }
+    }
+
+    // 9
+    public static boolean isLeapYear(int year) {
+        if (year % 400 == 0) {
+            return true;
+        } else if (year % 100 == 0) {
+            return false;
+        } else return year % 4 == 0;
+    }
+
+    // 10
+    public static void invertArray(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            array[i] = 1 - array[i];
+        }
+    }
+
+    // 11
+    public static void fillArrayWithNumbers(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            array[i] = i + 1;
+        }
+    }
+
+    // 12
+    public static void multiplyLessThanSix(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] < 6) {
+                array[i] *= 2;
+            }
+        }
+    }
+
+    // 13
+    public static void fillDiagonalWithOnes(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            matrix[i][i] = 1;
+        }
+    }
+
+    // 14
+    public static int[] createArray(int len, int initialValue) {
+        int[] array = new int[len];
+        for (int i = 0; i < len; i++) {
+            array[i] = initialValue;
+        }
+        return array;
+    }
+
+    // Вспомогательные методы для вывода
+    public static void printArray(int[] array) {
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
+    }
+
+    public static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int value : row) {
+                System.out.print(value + " ");
+            }
+            System.out.println();
+        }
+    }
+}
