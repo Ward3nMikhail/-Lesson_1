@@ -1,0 +1,25 @@
+# class Bowl {
+    private int food;
+
+    # Bowl(int food) {
+        this.food = food;
+    }
+
+    # boolean takeFood(int amount) {
+        if (amount <= food && amount > 0) {
+            food -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    # void addFood(int amount) {
+        if (amount > 0) {
+            food += amount;
+        }
+    }
+
+    # int getFood() {
+        return food;
+    }
+}
