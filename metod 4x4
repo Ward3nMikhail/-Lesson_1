@@ -1,0 +1,124 @@
+public class ArrayProcessor {
+
+    // Собственные исключения
+    public static class MyArraySizeException extends Exception {
+        public MyArraySizeException(String message) {
+            super(message);
+        }
+    }
+
+    public static class MyArrayDataException extends Exception {
+        public MyArrayDataException(String message) {
+            super(message);
+        }
+    }
+
+    /**
+     * Метод для обработки 4x4 строкового массива:
+     * - проверяет размер массива;
+     * - преобразует элементы в int и суммирует их;
+     * - бросает исключения при ошибках.
+     *
+     * @param array двумерный строковый массив 4x4
+     * @return сумма всех элементов массива
+     * @throws MyArraySizeException если размер массива не 4x4
+     * @throws MyArrayDataException если элемент не может быть преобразован в int
+     */
+    public static int processArray(String[][] array) throws MyArraySizeException, MyArrayDataException {
+        // Проверка размера массива
+        if (array == null || array.length != 4) {
+            throw new MyArraySizeException("Массив должен иметь 4 строки. Текущий размер: " + (array == null ? 0 : array.length));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            if (array[i] == null || array[i].length != 4) {
+                throw new MyArraySizeException("Строка " + i + " должна содержать 4 элемента. Текущий размер: " + (array[i] == null ? 0 : array[i].length));
+            }
+        }
+
+        int sum = 0;
+
+        // Проход по всем элементам массива
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                try {
+                    int value = Integer.parseInt(array[i][j]);
+                    sum += value;
+                } catch (NumberFormatException e) {
+                    throw new MyArrayDataException("Ошибка в ячейке [" + i + "][" + j + "]: не удалось преобразовать '" + array[i][j] + "' в число");
+                }
+            }
+        }
+
+        return sum;
+    }
+
+    /**
+     * Пример генерации и обработки ArrayIndexOutOfBoundsException.
+     */
+    public static void demonstrateArrayIndexOutOfBounds() {
+        int[] numbers = {1, 2, 3};
+
+        try {
+            // Попытка доступа к элементу за пределами массива
+            System.out.println("Элемент с индексом 5: " + numbers[5]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println("Поймано исключение: " + e.getClass().getSimpleName());
+            System.err.println("Сообщение: " + e.getMessage());
+            System.err.println("Трассировка стека:");
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        // Пример корректного массива 4x4
+        String[][] validArray = {
+                {"1", "2", "3", "4"},
+                {"5", "6", "7", "8"},
+                {"9", "10", "11", "12"},
+                {"13", "14", "15", "16"}
+        };
+
+        // Пример массива с неправильным размером
+        String[][] invalidSizeArray = {
+                {"1", "2"},
+                {"3", "4"}
+        };
+
+        // Пример массива с некорректными данными
+        String[][] invalidDataArray = {
+                {"1", "2", "3", "4"},
+                {"5", "abc", "7", "8"},
+                {"9", "10", "11", "12"},
+                {"13", "14", "15", "16"}
+        };
+
+        // Тестирование корректного массива
+        try {
+            int result = processArray(validArray);
+            System.out.println("Сумма элементов корректного массива: " + result);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            System.err.println("Ошибка обработки массива: " + e.getMessage());
+        }
+
+        // Тестирование массива с неправильным размером
+        try {
+            int result = processArray(invalidSizeArray);
+            System.out.println("Сумма элементов массива с неправильным размером: " + result);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            System.err.println("Ошибка обработки массива: " + e.getMessage());
+        }
+
+        // Тестирование массива с некорректными данными
+        try {
+            int result = processArray(invalidDataArray);
+            System.out.println("Сумма элементов массива с некорректными данными: " + result);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            System.err.println("Ошибка обработки массива: " + e.getMessage());
+        }
+
+        // Демонстрация ArrayIndexOutOfBoundsException
+        System.out.println("\n--- Демонстрация ArrayIndexOutOfBoundsException ---");
+        demonstrateArrayIndexOutOfBounds();
+    }
+}
