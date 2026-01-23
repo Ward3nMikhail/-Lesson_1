@@ -1,0 +1,143 @@
+import java.util.*;
+
+// Класс Student
+public class Student {
+    private String name;
+    private String group;
+    private int course;
+    private List<Integer> grades; // Оценки по предметам
+
+    // Конструктор
+    public Student(String name, String group, int course, List<Integer> grades) {
+        this.name = name;
+        this.group = group;
+        this.course = course;
+        this.grades = grades != null ? new ArrayList<>(grades) : new ArrayList<>();
+    }
+
+    // Геттеры и сеттеры
+    public String getName() {
+        return name;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public int getCourse() {
+        return course;
+    }
+
+    public void setCourse(int course) {
+        this.course = course;
+    }
+
+    public List<Integer> getGrades() {
+        return new ArrayList<>(grades);
+    }
+
+    public void addGrade(int grade) {
+        if (grade >= 1 && grade <= 5) {
+            grades.add(grade);
+        }
+    }
+
+    // Метод для вычисления среднего балла
+    public double getAverageGrade() {
+        if (grades.isEmpty()) {
+            return 0.0;
+        }
+        return grades.stream()
+                .mapToInt(Integer::intValue)
+                .average()
+                .orElse(0.0);
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", group='" + group + '\'' +
+                ", course=" + course +
+                ", grades=" + grades +
+                ", average=" + String.format("%.2f", getAverageGrade()) +
+                '}';
+    }
+}
+
+// Утилитный класс с методами обработки студентов
+class StudentManager {
+
+    /**
+     * Удаляет из коллекции студентов со средним баллом < 3
+     * @param students коллекция студентов
+     */
+    public static void removeLowPerformers(Set<Student> students) {
+        students.removeIf(student -> student.getAverageGrade() < 3.0);
+    }
+
+    /**
+     * Переводит студентов на следующий курс, если средний балл >= 3
+     * @param students коллекция студентов
+     */
+    public static void advanceStudents(Set<Student> students) {
+        for (Student student : students) {
+            if (student.getAverageGrade() >= 3.0) {
+                student.setCourse(student.getCourse() + 1);
+            }
+        }
+    }
+
+    /**
+     * Печатает имена студентов, обучающихся на указанном курсе
+     * @param students коллекция студентов
+     * @param course номер курса
+     */
+    public static void printStudents(Set<Student> students, int course) {
+        System.out.println("Студенты на курсе " + course + ":");
+        boolean found = false;
+        for (Student student : students) {
+            if (student.getCourse() == course) {
+                System.out.println(student.getName());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("Нет студентов на курсе " + course);
+        }
+    }
+}
+
+// Пример использования
+public class Main {
+    public static void main(String[] args) {
+        // Создаём коллекцию студентов
+        Set<Student> students = new HashSet<>();
+
+        students.add(new Student("Иван Иванов", "ИВТ-11", 1, Arrays.asList(4, 5, 3, 4)));
+        students.add(new Student("Пётр Петров", "ИВТ-12", 1, Arrays.asList(2, 2, 3, 2)));
+        students.add(new Student("Анна Сидорова", "ИВТ-21", 2, Arrays.asList(5, 5, 4, 5)));
+        students.add(new Student("Мария Козлова", "ИВТ-22", 2, Arrays.asList(3, 3, 2, 3)));
+        students.add(new Student("Алексей Смирнов", "ИВТ-31", 3, Arrays.asList(2, 1, 2, 1)));
+
+        System.out.println("Исходный список студентов:");
+        students.forEach(System.out::println);
+
+        // Удаляем студентов со средним баллом < 3
+        StudentManager.removeLowPerformers(students);
+        System.out.println("\nПосле удаления отстающих:");
+        students.forEach(System.out::println);
+
+        // Переводим студентов на следующий курс
+        StudentManager.advanceStudents(students);
+        System.out.println("\nПосле перевода на следующий курс:");
+        students.forEach(System.out::println);
+
+        // Печатаем студентов по курсам
+        System.out.println();
+        StudentManager.printStudents(students, 1);
+        StudentManager.printStudents(students, 2);
+        StudentManager.printStudents(students, 3);
+        StudentManager.printStudents(students, 4);
+    }
+}
