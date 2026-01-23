@@ -1,0 +1,77 @@
+import java.util.*;
+
+/**
+ * Класс «Телефонный справочник», хранящий фамилии и соответствующие телефонные номера.
+ * Позволяет добавлять записи и искать номера по фамилии (с поддержкой однофамильцев).
+ */
+public class PhoneBook {
+    // Внутренняя структура: карта, где ключ — фамилия, значение — список телефонов
+    private final Map<String, List<String>> phoneBook = new HashMap<>();
+
+    /**
+     * Добавляет запись в телефонный справочник.
+     * Если фамилия уже существует, номер добавляется в список телефонов этой фамилии.
+     *
+     * @param surname фамилия
+     * @param phone   номер телефона
+     */
+    public void add(String surname, String phone) {
+        if (surname == null || phone == null) {
+            return; // Игнорируем null-значения
+        }
+
+        // Получаем список телефонов для данной фамилии (или создаём новый)
+        List<String> phones = phoneBook.getOrDefault(surname, new ArrayList<>());
+        phones.add(phone);
+        phoneBook.put(surname, phones);
+    }
+
+    /**
+     * Ищет номера телефонов по фамилии.
+     * Возвращает список всех номеров, связанных с данной фамилией.
+     * Если фамилия не найдена, возвращает пустой список.
+     *
+     * @param surname фамилия для поиска
+     * @return список телефонных номеров (может быть пустым)
+     */
+    public List<String> get(String surname) {
+        if (surname == null) {
+            return Collections.emptyList();
+        }
+        return phoneBook.getOrDefault(surname, Collections.emptyList());
+    }
+
+    /**
+     * Вспомогательный метод: выводит содержимое справочника в консоль
+     * (для отладки и демонстрации).
+     */
+    public void printAll() {
+        System.out.println("Телефонный справочник:");
+        for (Map.Entry<String, List<String>> entry : phoneBook.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+}
+
+// Пример использования
+class Main {
+    public static void main(String[] args) {
+        PhoneBook phoneBook = new PhoneBook();
+
+        // Добавляем записи
+        phoneBook.add("Иванов", "123-456-7890");
+        phoneBook.add("Петров", "234-567-8901");
+        phoneBook.add("Сидоров", "345-678-9012");
+        phoneBook.add("Иванов", "456-789-0123"); // Однофамилец
+
+        phoneBook.add("Козлов", "567-890-1234");
+
+        // Выводим весь справочник
+        phoneBook.printAll();
+
+        // Ищем номера по фамилии
+        System.out.println("\nНомера для 'Иванов': " + phoneBook.get("Иванов"));
+        System.out.println("Номера для 'Петров': " + phoneBook.get("Петров"));
+        System.out.println("Номера для 'Пупкин': " + phoneBook.get("Пупкин")); // Не существует
+    }
+}
